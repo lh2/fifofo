@@ -1,0 +1,42 @@
+FIFOFO(1)                   General Commands Manual                  FIFOFO(1)
+
+NAME
+       fifofo - hold FIFO's open
+
+SYNOPSIS
+       fifofo FIFO
+
+DESCRIPTION
+       fifofo  stands for FIFO fopen. It's a simple tool that calls fopen on a
+       FIFO.
+
+       This is useful for processes that are supposed to run  as  daemons  but
+       accept  input from stdin to provide some kind of console functionality.
+       Some people run these in screen or tmux sessions to retain the  console
+       functionality,  but  lose the benefits of some kind of service supervi‐
+       sor.  The obvious solution is to create a FIFO and  pipe  it  into  the
+       process.   But  that has it's own problems.  The process that opens the
+       FIFO for reading will hang until some other process opens the FIFO  for
+       writing.   Not  useful  if  you  do  not need the console at all times.
+       Also, if the last writer closes the FIFO, it will send EOF to the read‐
+       ing process and it will most likely stop reading.  Which means you will
+       never be able to disconnect your console.  Not very practical.
+
+       This tool was written as a simple way to  combat  this  problem.   Just
+       start  fifofo  with the filename of your FIFO as the first argument and
+       fifofo will magically make everything work.
+
+OPTIONS
+       -h, --help
+              display a short help message
+
+       --version
+              displays version and license information
+
+AUTHOR
+       Lukas Henkel <lh@gehweg.org>
+
+LICENSE
+       MIT
+
+                                  fifofo-1.0                         FIFOFO(1)
