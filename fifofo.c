@@ -70,6 +70,7 @@ int
 main(int argc, char *argv[])
 {
 	char *arg;
+	FILE *file;
 
 	if (argc != 2) {
 		usage(stderr);
@@ -92,7 +93,7 @@ main(int argc, char *argv[])
 		perror("access");
 		exit(EXIT_FAILURE);
 	}
-	FILE *file = fopen(arg, "a");
+	file = fopen(arg, "a");
 	if (!file) {
 		perror("fopen");
 		exit(EXIT_FAILURE);
