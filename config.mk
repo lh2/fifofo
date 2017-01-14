@@ -6,5 +6,6 @@ MANPREFIX = ${PREFIX}/share/man
 
 CC = cc
 CPP = cpp
-CFLAGS = -std=c99 -Wall -Wextra -pedantic -O3 -D_XOPEN_SOURCE=700 -DNAME=\"${NAME}\" -DVERSION=\"${VERSION}\" -DENABLE_INOTIFY
+ENABLE_INOTIFY = -DENABLE_INOTIFY
+CFLAGS = -std=c99 -Wall -Wextra -pedantic -O3 -D_XOPEN_SOURCE=700 -DNAME=\"${NAME}\" -DVERSION=\"${VERSION}\" ${ENABLE_INOTIFY}
 

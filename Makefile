@@ -18,9 +18,10 @@ ${NAME}: license.h ${OBJ}
 
 ${NAME}.1: ${NAME}.1.tpl config.mk
 	@echo CPP $<
-	${CPP}  -DNAMEL=${NAME}\
+	@${CPP} -DNAMEL=${NAME}\
 		-DNAMEU=$(shell echo ${NAME} | awk '{print toupper($$0)}')\
-		-DVERSION=${VERSION} $< | sed '/^#.*/d' | sed '/^$$/d' > $@
+		-DVERSION=${VERSION}\
+		${ENABLE_INOTIFY} $< | sed '/^#.*/d' | sed '/^$$/d' > $@
 
 README: ${NAME}.1
 	@MANWIDTH=80 man ./$< > $@

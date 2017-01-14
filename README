@@ -8,7 +8,7 @@ SYNOPSIS
 
 DESCRIPTION
        fifofo  stands for FIFO fopen. It's a simple tool that calls fopen on a
-       FIFO.
+       FIFO and exits when the FIFO is deleted using inotify.
 
        This is useful for processes that are supposed to run  as  daemons  but
        accept  input from stdin to provide some kind of console functionality.
