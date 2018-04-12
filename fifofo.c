@@ -18,7 +18,7 @@ static const size_t BUF_LEN_INOTIFY = sizeof(struct inotify_event) + NAME_MAX + 
 void
 usage(FILE *out)
 {
-	fprintf(out, "Usage: %s FIFO\n", NAME);
+	fprintf(out, "Usage: %s [-m mode] FIFO\n", NAME);
 }
 
 void
@@ -69,31 +69,47 @@ error:
 int
 main(int argc, char *argv[])
 {
-	char *arg;
+	char *arg = NULL;
 	FILE *file;
+	char *mode = "a";
 
-	if (argc != 2) {
+	for (int i = 1; i < argc; i++) {
+		arg = argv[i];
+		if (strcmp(arg, "-h") == 0 || strcmp(arg, "--help") == 0) {
+			usage(stdout);
+			exit(EXIT_SUCCESS);
+		}
+		if (strcmp(arg, "--version") == 0) {
+			version();
+			exit(EXIT_SUCCESS);
+		}
+
+		if (i + 1 == argc) {
+			if (arg[0] != '-') {
+				break;
+			}
+			usage(stderr);
+			exit(EXIT_FAILURE);
+		}
+
+		if (strcmp(arg, "-m") == 0 || strcmp(arg, "--mode") == 0) {
+			mode = argv[++i];
+		} else if (arg[0] == '-') {
+			usage(stderr);
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (!arg) {
 		usage(stderr);
 		exit(EXIT_FAILURE);
 	}
-	arg = argv[1];
-	if (strcmp(arg, "-h") == 0 || strcmp(arg, "--help") == 0) {
-		usage(stdout);
-		exit(EXIT_SUCCESS);
-	}
-	if (strcmp(arg, "--version") == 0) {
-		version();
-		exit(EXIT_SUCCESS);
-	}
-	if (arg[0] == '-') {
-		fprintf(stderr, "Unknown option %s\n", arg);
-		exit(EXIT_FAILURE);
-	}
+
 	if (access(arg, W_OK) < 0) {
 		perror("access");
 		exit(EXIT_FAILURE);
 	}
-	file = fopen(arg, "a");
+	file = fopen(arg, mode);
 	if (!file) {
 		perror("fopen");
 		exit(EXIT_FAILURE);

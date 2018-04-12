@@ -33,6 +33,10 @@ OPTIONS
        --version
               displays version and license information
 
+       -m mode, --mode mode
+              file mode which fifofo uses to open the fifo instead of  default
+              "a" (see fopen(3))
+
 AUTHOR
        Lukas Henkel <lh@gehweg.org>
 

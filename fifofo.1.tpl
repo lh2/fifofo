@@ -37,6 +37,10 @@ display a short help message
 .TP
 .B \-\-version
 displays version and license information
+.TP
+.B \-m mode, \-\-mode mode
+file mode which NAMEL uses to open the fifo instead of default "a" (see
+.BR fopen (3))
 .SH AUTHOR
 Lukas Henkel <lh@gehweg.org>
 .SH LICENSE
